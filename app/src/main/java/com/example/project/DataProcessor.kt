@@ -15,7 +15,7 @@ class DataProcessor {
      */
 
     @Throws(DataProcessorException::class)
-    fun processData(data: ByteArray, encryptionKey: PublicKey?, compressionEnabled: Boolean, hashingEnabled: Boolean): ProcessedData {
+    fun processData(data: ByteArray, encryptionKey: String?, compressionEnabled: Boolean, hashingEnabled: Boolean): ProcessedData {
         var outputData: ByteArray = data
         var encryptedSecretKey: ByteArray? = null
         var hashKey: ByteArray? = null
@@ -33,11 +33,11 @@ class DataProcessor {
         //performs encryption if enabled
         if (encryptionKey != null) {
             val aesEncryptor = AesEncryptor()
-            val rsaEncryptor = RsaEncryptor()
+            val rsaEncryptor = RsaEncryptor(encryptionKey)
             try {
                 val aesSecretKey = aesEncryptor.generateKey()
                 outputData = aesEncryptor.encrypt(outputData, aesSecretKey)
-                encryptedSecretKey = rsaEncryptor.encrypt(aesSecretKey.encoded, encryptionKey)
+                encryptedSecretKey = rsaEncryptor.encrypt(aesSecretKey.encoded)
             } catch (exception: Exception) {
                 Log.d("Encryption", " ".plus(exception.message))
             }
