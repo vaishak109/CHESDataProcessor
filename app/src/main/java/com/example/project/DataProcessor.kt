@@ -2,7 +2,6 @@ package com.example.project
 
 import android.util.Log
 import java.lang.Exception
-import java.security.PublicKey
 
 class DataProcessor {
     /**
@@ -10,7 +9,7 @@ class DataProcessor {
      * @param data the input byteArray to be processed
      * @param encryptionKey the public key required for rsa encryption. If null, encryption will be disabled
      * @param compressionEnabled a flag indicating whether compression is enabled or not
-     * @param needHashing a flag indicating whether hashing is enabled or not
+     * @param hashingEnabled a flag indicating whether hashing is enabled or not
      * @return ProcessedData which contains processed data, encrypted key and hash key
      */
 
