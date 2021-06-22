@@ -29,29 +29,4 @@ class Compressor {
         }
         return outputStream.toByteArray()
     }
-
-    /**
-     *Decompress ByteArray using Inflater
-     * @param data the input byteArray to decompress
-     * @return decompressed BYteArray
-     */
-    fun decompress(data: ByteArray): ByteArray {
-        val inflater = Inflater()
-        inflater.setInput(data)
-        inflater.finished()
-
-        val buffer = ByteArray(1024)
-        val outputStream = ByteArrayOutputStream()
-        outputStream.use {
-            try {
-                while (!inflater.finished()) {
-                    val countOfBytesDecompressed = inflater.inflate(buffer)
-                    it.write(buffer, 0, countOfBytesDecompressed)
-                }
-            } catch (exception: Exception) {
-                Log.d(TAG, exception.toString())
-            }
-        }
-        return outputStream.toByteArray()
-    }
 }
