@@ -14,7 +14,7 @@ class DataProcessor {
      * @return compressed ByteArray
      */
 
-//    @Throws(ProcessorException)
+    @Throws(DataProcessorException::class)
     fun processData(data: ByteArray, encryptionKey: PublicKey?, compressionEnabled: Boolean, hashingEnabled: Boolean): ProcessedData {
         var outputData: ByteArray = data
         var encryptedSecretKey: ByteArray? = null
