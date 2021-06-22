@@ -32,7 +32,6 @@ class AesEncryptor {
     companion object {
         const val AES = "AES"
         const val KEY_SIZE = 256
-        const val IV_SIZE = 16
         const val TRANSFORMATION = "AES/ECB/PKCS5Padding"
     }
 }
