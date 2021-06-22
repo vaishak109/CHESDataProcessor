@@ -11,7 +11,7 @@ class DataProcessor {
      * @param encryptionKey the public key required for rsa encryption. If null, encryption will be disabled
      * @param compressionEnabled a flag indicating whether compression is enabled or not
      * @param needHashing a flag indicating whether hashing is enabled or not
-     * @return compressed ByteArray
+     * @return ProcessedData which contains processed data, encrypted key and hash key
      */
 
     @Throws(DataProcessorException::class)
