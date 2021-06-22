@@ -7,14 +7,14 @@ class DataProcessor {
     /**
      *Performs operations such as compression, encryption and hashing based on the input configuration
      * @param data the input byteArray to be processed
-     * @param encryptionKey the public key required for rsa encryption. If null, encryption will be disabled
+     * @param encryptionRSAKey the public key required for rsa encryption. If null, encryption will be disabled
      * @param compressionEnabled a flag indicating whether compression is enabled or not
      * @param hashingEnabled a flag indicating whether hashing is enabled or not
      * @return ProcessedData which contains processed data, encrypted key and hash key
      */
 
     @Throws(DataProcessorException::class)
-    fun processData(data: ByteArray, encryptionKey: String?, compressionEnabled: Boolean, hashingEnabled: Boolean): ProcessedData {
+    fun processData(data: ByteArray, encryptionRSAKey: String?, compressionEnabled: Boolean, hashingEnabled: Boolean): ProcessedData {
         var outputData: ByteArray = data
         var encryptedSecretKey: ByteArray? = null
         var hashKey: ByteArray? = null
@@ -30,9 +30,9 @@ class DataProcessor {
         }
 
         //performs encryption if enabled
-        if (encryptionKey != null) {
+        if (encryptionRSAKey != null) {
             val aesEncryptor = AesEncryptor()
-            val rsaEncryptor = RsaEncryptor(encryptionKey)
+            val rsaEncryptor = RsaEncryptor(encryptionRSAKey)
             try {
                 val aesSecretKey = aesEncryptor.generateKey()
                 outputData = aesEncryptor.encrypt(outputData, aesSecretKey)
