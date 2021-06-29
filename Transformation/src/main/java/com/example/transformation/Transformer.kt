@@ -35,13 +35,13 @@ class Transformer {
 
         //getting the JSONArray containing the telemetry readings
         val readings = inputJSON.optJSONArray("telemetry") ?: throw TransformationException("Invalid input format, either the value of 'telemetry' key is not a JSONArray or the input JSONObject doesn't have the key 'telemetry'")
-        val noOfReadings = readings.length()
+        val noOfReadings = readings.length().takeUnless { it == 0 } ?: throw TransformationException("Invalid input, the value of \"telemetry\" key is an empty array")
 
-        //looping through the individual readings which is a JSONObject
+        //looping through the telemetry array which is a JSONObject
         for (index in 0 until noOfReadings) {
             val reading = readings.optJSONObject(index) ?: throw TransformationException("Invalid input format, either the value at index $index of the JSONArray with key 'telemetry' is null or the value is not a JSONObject")
-            val binding = reading.optString("binding", null) ?: throw TransformationException("Invalid input format, the JSONObject inside the JSONArray doesn't have the key 'binding'")
-            val value = reading.optString("value", null) ?: throw TransformationException("Invalid input format, the JSONObject inside the JSONArray doesn't have the key 'value'")
+            val binding = reading.optString("binding").takeUnless { it.isEmpty() } ?: throw TransformationException("Invalid input format, the JSONObject inside telemetry array doesn't have the key \"binding\" or it's value is null/an empty string")
+            val value = reading.optString("value").takeUnless { it.isEmpty() } ?: throw TransformationException("Invalid input format, the JSONObject inside telemetry array doesn't have the key \"value\" or it's value is null")
 
             //replacing the *binding* with actual values
             transformedOutput = transformedOutput.replace("*$binding*", value)
