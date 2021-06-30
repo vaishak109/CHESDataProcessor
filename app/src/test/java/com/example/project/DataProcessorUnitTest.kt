@@ -59,7 +59,7 @@ class DataProcessorUnitTest {
         val sizeAfterCompression = decryptedCompressedData.size
 //        println("Size before compression: $SIZE_BEFORE_COMPRESSION")
 //        println("Size after compression: $sizeAfterCompression")
-        assert(Hex.toHexString(decryptedCompressedData) == "789c4b4c0402852410504806018514105048050300a2070a91")
+        assert(Hex.toHexString(decryptedCompressedData) == HEX_STRING_OF_COMPRESSED_DATA)
         assert(sizeAfterCompression <= SIZE_BEFORE_COMPRESSION)
     }
 
@@ -91,7 +91,7 @@ class DataProcessorUnitTest {
         val decryptedAesKey = decryptAesKey(processedData.encryptedAesKey, privateKey)
         val decryptedCompressedData = aesDecrypt(processedData.outputData, decryptedAesKey)
         val sizeAfterCompression = decryptedCompressedData.size
-        assert(Hex.toHexString(decryptedCompressedData) == "789c4b4c0402852410504806018514105048050300a2070a91")
+        assert(Hex.toHexString(decryptedCompressedData) == HEX_STRING_OF_COMPRESSED_DATA)
         assert(sizeAfterCompression <= SIZE_BEFORE_COMPRESSION)
         assert(processedData.hashKey != null)
     }
@@ -127,5 +127,6 @@ class DataProcessorUnitTest {
         const val PRIVATE_KEY = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAIyixLSnFDIrMa8yMnyt5MnEQwH4zZW1UUBkph/d+BOue7mLeJCQDSzaLDwT+8weXi4ZNztiquAg0H/shKCRukQVOycuQwbMHt4YY51INSCprPwCZrLy/7n6RYFy8Vp3ufXyEI14ufT211YWQHZJC1I6+9oW1dUlwPThjm25kOsJAgMBAAECgYB7Lc3Q1U6xKngYFYV3AvCTcN2oCn43FFsYZY/D9a1lv7wKpghxxlpj4KxB6tbuz+J5yghAcYltShCVG1qHMVzNHHPjzIxC9dV2iNrZS55HAfU6IrmL4jH3bu19jO457/F4E/3vercwJnDQajOikxiGiwX7Wud8lbj/dhyIwoz1aQJBAMbKMxad26PY/Bdg7ZCOTMWDdAiMNi2+o1ZK2fyd9jJKCumqL9Vpm+zZYaTUttdmJohd1JzckwWH+mvOCcy5RBsCQQC1HBU1bWNOMm/CzKRlek60F/6yBpeDMl0p1vAp4JWT57UiZnmkdiUet3yRlaX+QcpqCVuJiNas8rtLsiRVNherAkApfeTB8Lr6bPzZKFsNlBYEF9btPc7FJ4hSJ5duOc48WuYCNYp8YemwuwK9c8SiGukqB2OsRgHN4r7rJ3s2JulHAkEAiTvqZj2pTgux3C4tNCflk1nLSSLtlCCJr7aK7XCcZyLgglycOB6+KfRnk/mNeohn1MmabzEdWpfjjIxEM711WQJBAId1whM9m7HkuSwnjcPmBRWAVhmh32UDBTOn0CCINoVWBZVQLiHZ0UFCVlyXrxWF0F/71bzjJ0cj9xBlzt0eMd8="
         const val node_rsa_init = "RSA/ECB/OAEPWithSHA1AndMGF1Padding"
         const val AES = "AES/ECB/PKCS5Padding"
+        const val HEX_STRING_OF_COMPRESSED_DATA = "789c4b4c0402852410504806018514105048050300a2070a91"
     }
 }
