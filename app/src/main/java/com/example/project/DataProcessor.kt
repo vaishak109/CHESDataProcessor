@@ -11,6 +11,7 @@ class DataProcessor {
      * @param compressionEnabled a flag indicating whether compression is enabled or not
      * @param hashingEnabled a flag indicating whether hashing is enabled or not
      * @return ProcessedData which contains processed data, encrypted key and hash key
+     * @throws DataProcessorException
      */
 
     @Throws(DataProcessorException::class)
@@ -26,19 +27,22 @@ class DataProcessor {
                 outputData = compressor.compress(outputData)
             } catch (exception: Exception) {
                 Log.d("Compression operation", " ".plus(exception.message))
+                throw DataProcessorException(exception.message.toString())
             }
         }
 
         //performs encryption if enabled
         if (encryptionRSAKey != null) {
             val aesEncryptor = AesEncryptor()
-            val rsaEncryptor = RsaEncryptor(encryptionRSAKey)
+            val rsaEncryptor = RsaEncryptor()
             try {
                 val aesSecretKey = aesEncryptor.generateKey()
                 outputData = aesEncryptor.encrypt(outputData, aesSecretKey)
-                encryptedSecretKey = rsaEncryptor.encrypt(aesSecretKey.encoded)
+                val rsaPublicKey = rsaEncryptor.getPublicKeyFromBase64EncodedString(encryptionRSAKey)
+                encryptedSecretKey = rsaEncryptor.encrypt(aesSecretKey.encoded, rsaPublicKey)
             } catch (exception: Exception) {
                 Log.d("Encryption", " ".plus(exception.message))
+                throw DataProcessorException(exception.message.toString())
             }
         }
 
@@ -49,6 +53,7 @@ class DataProcessor {
                 hashKey = sha.hash(outputData)
             } catch (exception: Exception) {
                 Log.d("Hashing", " ".plus(exception.message))
+                throw DataProcessorException(exception.message.toString())
             }
         }
         return ProcessedData(encryptedSecretKey, outputData, hashKey)
